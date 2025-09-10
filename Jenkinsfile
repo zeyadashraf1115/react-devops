@@ -1,16 +1,24 @@
- pipeline {
+pipeline {
     agent any
 
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/YOUR_USERNAME/flask-devops.git'
+                git branch: 'main',
+                    url: 'https://github.com/zeyadashraf1115/react-devops.git',
+                    credentialsId: 'github-react-token'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Install Dependencies') {
             steps {
-                sh 'docker build -t flask-app .'
+                sh 'npm install'
+            }
+        }
+
+        stage('Build React App') {
+            steps {
+                sh 'npm run build'
             }
         }
 
@@ -22,4 +30,5 @@
         }
     }
 }
+
 
