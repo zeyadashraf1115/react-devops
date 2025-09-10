@@ -4,9 +4,20 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/zeyadashraf1115/react-devops.git',
-                    credentialsId: 'github-react-token'
+                git branch: 'main', url: 'https://github.com/zeyadashraf1115/react-devops.git', credentialsId: 'github-react-token'
+            }
+        }
+
+        stage('Install Node.js') {
+            steps {
+                sh '''
+                apt-get update
+                apt-get install -y curl
+                curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+                apt-get install -y nodejs
+                node -v
+                npm -v
+                '''
             }
         }
 
@@ -30,5 +41,4 @@ pipeline {
         }
     }
 }
-
 
